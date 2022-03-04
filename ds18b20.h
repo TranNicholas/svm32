@@ -17,4 +17,4 @@ void DS18B20_CMDReceive (const uint8_t * cmd, uint8_t size);
 
 void DS18B20_Process (void);
 
-#endif /* __STM32L476R_NUCLEO_DS18B20_H */
+#endif

@@ -10,6 +10,7 @@ void Init_USARTx(int x) {
 		USART_Init(USART2);
 	}
 }
+
 void UART1_Init(void) {
 	RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 	RCC->CCIPR |= RCC_CCIPR_USART1SEL_0;
@@ -24,10 +25,10 @@ void UART1_GPIO_Init(void) {
 	// very high speed
 	GPIOB->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR6 | GPIO_OSPEEDER_OSPEEDR7;
 	// push-pull output type
-	GPIOB->OTYPER &= ~GPIO_OTYPER_OT6 & ~GPIO_OTYPER_OT7;
+	GPIOB->OTYPER &= ~(GPIO_OTYPER_OT6 | ~GPIO_OTYPER_OT7);
 	// pull-up resistors
 	GPIOB->PUPDR |= GPIO_PUPDR_PUPDR6_0 | GPIO_PUPDR_PUPDR7_0;
-	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPDR6_1 & ~GPIO_PUPDR_PUPDR7_1;
+	GPIOB->PUPDR &= ~(GPIO_PUPDR_PUPDR6_1 | ~GPIO_PUPDR_PUPDR7_1);
 	// selct AF 7 for PB6 and PB7
 	GPIOB->AFR[0] |= GPIO_AFRL_AFSEL6 | GPIO_AFRL_AFSEL7;
 	GPIOB->AFR[0] &= ~(GPIO_AFRL_AFSEL6_3 | GPIO_AFRL_AFSEL7_3);
@@ -62,6 +63,7 @@ void USART_Init(USART_TypeDef* USARTx) {
 	USARTx->CR1 &= ~USART_CR1_M & ~USART_CR1_OVER8; 
 	USARTx->CR2 &= ~USART_CR2_STOP; // 1 stop bit
 	USARTx->BRR = 417U; // set baud rate to 9600
+	USARTx->CR1 |= USART_CR1_RXNEIE; // enable receive interrupt
 	// USARTx->BRR = 35U; // set baud rate to 115200
 	// enable transmitter and receiver
 	USARTx->CR1 |= USART_CR1_TE | USART_CR1_RE; 

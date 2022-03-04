@@ -101,7 +101,7 @@ uint8_t DS18B20_CMDReset(void)
 	/**
 	 * Baud Rate = 9600
 	 * with Fck=4MHz, USARTDIV = 256*4000000/9600 = 106666.6667
-	 * BRR = 106666 -> Baud Rate = 9600.06 -> 0.8% error
+	 * BRR = 106666 -> Baud Rate = 9599.97 -> 0.0003% error
 	 */
 	// Set Baudrate to 9600 baud @4MHz
 	LPUART1->BRR = 106667U;
@@ -134,7 +134,7 @@ uint8_t DS18B20_CMDReset(void)
 	/**
 	 * Baud Rate = 115200
 	 * with Fck=4MHz, USARTDIV = 256*4000000/115200 = 8888.888
-	 * BRR = 8889 -> Baud Rate = 115198.56 -> 0.8% error
+	 * BRR = 8889 -> Baud Rate = 115198.56 -> 0.001% error
 	 */
 	// Set Baudrate to 115200 baud @4MHz
 	LPUART1->BRR = 8889U;
@@ -145,15 +145,6 @@ uint8_t DS18B20_CMDReset(void)
 	return sensor;
 }
 
-/**
- * LPUART1_OneWire_Init()
- *
- * - Initialize LPUART1   for OneWire communication at 115200 Baud
- * LPUART1
- * - RX -> PC0 (AF8)
- * - TX -> PC1 (AF8)
- *
- */
 void DS18B20_GPIO_Init(void)
 {
 	// Enable GPIOC clock

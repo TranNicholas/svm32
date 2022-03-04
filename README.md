@@ -2,13 +2,13 @@
 
 - [x] Reading Temperature
 - - [x] 1-Wire over UART
-- - [x] Human-Readable Unit (Celsius/Fahrenheit)
+- - [x] Human-Readable Unit (Celsius/Fahrenheit
 
 - [ ] Controlling Heater/Pump
 - - [x] Basic control [Off/On]
 - - [ ] Implement cooking timer for auto shutoff
 - - [ ] Simple control based on temperature readings
-- - [ ] Implement more advanced control with PID
+- - [ ] Implement PID
 
 - [ ] Bluetooth
 - - [x] Basic Function (Serial Terminal)
