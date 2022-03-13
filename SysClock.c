@@ -1,7 +1,6 @@
 #include "SysClock.h"
 
-void System_Clock_Init(void)
-{
+void System_Clock_Init(void){
 	// Start LSE (for MSI PLL hardware calibration) 
 	RCC->APB1ENR1 |= RCC_APB1ENR1_PWREN; // Enable writing of Battery/Backup domain 
 	PWR->CR1 |= PWR_CR1_DBP;

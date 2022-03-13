@@ -150,15 +150,15 @@ void DS18B20_GPIO_Init(void)
 	// Enable GPIOC clock
 	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOCEN;
 	
-	// Configure PA0 and PA1 as Alternate function
+	// Configure PC0 and PC1 as Alternate function
 	GPIOC->MODER &= ~(GPIO_MODER_MODER0 | GPIO_MODER_MODER1);
 	GPIOC->MODER |=  (GPIO_MODER_MODE0_1 | GPIO_MODER_MODE1_1);
 	
-	// Set PA0 and PA1 to AF8 (LPUART1)
+	// Set PC0 and PC1 to AF8 (LPUART1)
 	GPIOC->AFR[0] &= ~(GPIO_AFRL_AFSEL0 | GPIO_AFRL_AFSEL1);
 	GPIOC->AFR[0] |=  (GPIO_AFRL_AFSEL0_3 | GPIO_AFRL_AFSEL1_3);
 	
-	// Set output type PA0 TX as Open drain
+	// Set output type PC0 TX as Open drain
 	GPIOC->OTYPER |= (GPIO_OTYPER_OT0 |GPIO_OTYPER_OT1);
 	
 	// Set output to high speed*/
