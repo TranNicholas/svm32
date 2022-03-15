@@ -36,12 +36,10 @@ static enum COMMANDS {INVALID, REPORT, START, PAUSE, STOP, TIME, TEMP} command =
 static char buffer[1024] = {0};
 static char lcd_buf[21] = {0};
 
-static uint32_t cycles = 0;
-static const uint32_t refresh_period = 2;
-
-uint32_t windowSize = 5000U, lastTime, currentTime, windowStart, output;
-double errSum, lastErr;
-double kp = 2, ki = 5, kd = 1;
+static const uint32_t windowSize = 5000U;
+static uint32_t lastTime, currentTime, windowStart, output;
+static double errSum, lastErr;
+static double kp = 2, ki = 5, kd = 1;
 
 void compute(void) {
 	uint32_t now = SysTick->VAL;
@@ -107,25 +105,21 @@ int main(void)
 	while(1)
 	{
 		DS18B20_Process();
-		cycles++;
-		if (cycles > refresh_period) {
-			cycles = 0;
-			LCD_Locate(1, 1);
-			snprintf(lcd_buf, 21, "Status: %s                    ", STATUS2STR[status]);
-			LCD_print_str(lcd_buf);
-			
-			LCD_Locate(2, 1);
-			snprintf(lcd_buf, 21, "Temp: %.2f F                    ", currentTemperature * 9/5 + 32);
-			LCD_print_str(lcd_buf);
-			
-			LCD_Locate(3, 1);
-			snprintf(lcd_buf, 21, "Timer: %d Minutes                    ", cookingTime - minutes);
-			LCD_print_str(lcd_buf);
-			
-			LCD_Locate(4, 1);
-			snprintf(lcd_buf, 21, "Power: %s                    ", RELAY2STR[(GPIOA->ODR & GPIO_ODR_OD13) == GPIO_ODR_OD13]);
-			LCD_print_str(lcd_buf);
-		}
+		LCD_Locate(1, 1);
+		snprintf(lcd_buf, 21, "Status: %s                    ", STATUS2STR[status]);
+		LCD_print_str(lcd_buf);
+		
+		LCD_Locate(2, 1);
+		snprintf(lcd_buf, 21, "Temp: %.2f F                    ", currentTemperature * 9/5 + 32);
+		LCD_print_str(lcd_buf);
+		
+		LCD_Locate(3, 1);
+		snprintf(lcd_buf, 21, "Timer: %d Minutes                    ", cookingTime - minutes);
+		LCD_print_str(lcd_buf);
+		
+		LCD_Locate(4, 1);
+		snprintf(lcd_buf, 21, "Power: %s                    ", RELAY2STR[(GPIOA->ODR & GPIO_ODR_OD13) == GPIO_ODR_OD13]);
+		LCD_print_str(lcd_buf);
 		switch(status) {
 			case COOKING: // cook the food for cookingTime
 				if (command == PAUSE) {
