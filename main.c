@@ -135,12 +135,8 @@ int main(void)
 					minutes = 0;
 				}else if (minutes < cookingTime) {
 					currentTime = SysTick->VAL;
-					// https://github.com/br3ttb/Arduino-PID-Library/blob/master/examples/PID_RelayOutput/PID_RelayOutput.ino
 					compute();
-					if (currentTime - windowStart > windowSize) {
-						windowStart += windowSize;
-					}
-					if (output < currentTime - windowStart) { // time proportioning control
+					if (output > currentTime - windowStart) { // time proportioning control
 						Relay_On();
 					} else {
 						Relay_Off();
